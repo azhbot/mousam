@@ -1,0 +1,26 @@
+export const users=[
+    {
+    id:1,
+    name:"userName1",
+    email:"userEmail1",
+    phone:"1234567890",
+    profileImage:'',
+    backgroundImage:"",
+    addressId:1,
+    categoryId:1,
+    subCategory:1,
+    createdAt:123
+    },
+    {
+    id:2,
+    name:"userName2",
+    email:"userEmail2",
+    phone:"1234567890",
+    profileImage:'',
+    backgroundImage:"",
+    addressId:1,
+    categoryId:1,
+    subCategory:1,
+    createdAt:123
+    },
+]

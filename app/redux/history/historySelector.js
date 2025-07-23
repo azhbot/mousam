@@ -1,0 +1,1 @@
+export const historyProductsSelector=(state)=>state.history.products

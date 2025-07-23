@@ -1,0 +1,109 @@
+const styles = StyleSheet.create({
+  menu: {
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  option: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderColor: colors.gray,
+  },
+  optionText: {
+    fontSize: 16,
+    color: "#333",
+  },
+});
+
+export default PopupOptions;
+
+
+
+
+
+
+// components/PopupOptions.js
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, Pressable, Dimensions } from "react-native";
+import { colors } from "../../constant/colors";
+import CustomLabel from "../label";
+import Icon from "../icon";
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
+
+const PopupOptions = ({
+  visible,
+  onOptionSelect = () => {},
+  onClose = () => {},
+}) => {
+  const options = ["printer", "cloud-download", "share", "delete"];
+  const optionLenght = options.length;
+
+  if (!visible) return null;
+
+  return (
+    <View
+      style={{
+        position: "absolute",
+        padding: 20,
+        top: HEIGHT * 0.5,
+        alignItems: "flex-end",
+        width: "100%",
+      }}
+    >
+      <View style={[styles.menu]}>
+        {options.map((option, index) => (
+          <Pressable
+            key={index}
+            onPress={() => {
+              onOptionSelect(option);
+              onClose();
+            }}
+            style={[
+              styles.option,
+              {
+                borderBottomWidth: optionLenght === index + 1 ? 0 : 0.5,
+              },
+            ]}
+          >
+            {/* <CustomLabel color={"#fff"}>{option}</CustomLabel> */}
+            <Icon
+              name={option}
+              color={optionLenght === index + 1 ? "red" : "#000"}
+            />
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  menu: {
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  option: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderColor: colors.gray,
+  },
+  optionText: {
+    fontSize: 16,
+    color: "#333",
+  },
+});
+
+export default PopupOptions;

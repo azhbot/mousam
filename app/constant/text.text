@@ -1,0 +1,102 @@
+import React from "react";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import HomeScreen from "../screens/home";
+import SavedScreen from "../screens/saved";
+import AccountScreen from "../screens/account";
+import XhomeScreen from "../screensX/xhome";
+import CategoryScreen from "../screens/category";
+import Icon from "../components/icon";
+import { icons } from "../constant/icons";
+
+const Tab = createBottomTabNavigator();
+
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  // Custom visual order (e.g. category, xhome, home, saved, accountr)
+  const customOrder = [2, 1, 0, 3, 4]; // index order of routes
+
+  return (
+    <View style={styles.tabContainer}>
+      {customOrder.map((index) => {
+        const route = state.routes[index];
+        const { options } = descriptors[route.key];
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: "tabPress",
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const iconSource =
+          route.name === "xhome"
+            ? isFocused ? icons.plusBlack : icons.plus
+            : route.name === "category"
+            ? isFocused ? icons.appsBlack : icons.apps
+            : route.name === "home"
+            ? isFocused ? icons.homeBlack : icons.home
+            : route.name === "saved"
+            ? isFocused ? icons.saveBlack : icons.save
+            : isFocused ? icons.userBlack : icons.user;
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            onPress={onPress}
+            style={[
+              styles.tabButton,
+              route.name === "home" && styles.centerTab, // Optional: visually center 'home'
+            ]}
+          >
+            <Icon size={24} source={iconSource} />
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+};
+
+export const TabNavigator = () => (
+  <Tab.Navigator
+    initialRouteName="home"
+    screenOptions={{
+      headerShown: false,
+      tabBarShowLabel: false,
+      tabBarHideOnKeyboard: true,
+    }}
+    tabBar={(props) => <CustomTabBar {...props} />}
+  >
+    <Tab.Screen name="home" component={HomeScreen} />
+    <Tab.Screen name="xhome" component={XhomeScreen} />
+    <Tab.Screen name="category" component={CategoryScreen} />
+    <Tab.Screen name="saved" component={SavedScreen} />
+    <Tab.Screen name="accountr" component={AccountScreen} />
+  </Tab.Navigator>
+);
+
+const styles = StyleSheet.create({
+  tabContainer: {
+    flexDirection: "row",
+    height: 60,
+    backgroundColor: "#fff",
+    borderTopWidth: 0.5,
+    borderTopColor: "#ccc",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  tabButton: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  centerTab: {
+    marginTop: -10, // Optional: raise center tab
+  },
+});

@@ -1,0 +1,26 @@
+import { View, StyleSheet } from "react-native";
+import CustomButton from "../../../components/button";
+import { colors } from "../../../constant/colors";
+
+const XregistrationFinalRegisterButton = ({ handleContinuePress, title }) => {
+  return (
+    <CustomButton
+      backgroundColor={colors.primary}
+      borderRadius={0}
+      style={styles.continueButton}
+      title={title}
+      height={50}
+      onPress={handleContinuePress}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  continueButton: {
+    width: "100%",
+    marginBottom: 40,
+    alignSelf: "center",
+  },
+});
+
+export default XregistrationFinalRegisterButton;
